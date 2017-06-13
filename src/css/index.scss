@@ -1,24 +1,95 @@
+$darkGrey: #434343;
+$grey: #636363;
+$teal: #1DE9B6;
+$blue: #00BCD6;
+$advancedPadText: #0C5D49;
+$secondaryText: #909090;
+$tablet-width: 768px;
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
+@import "@material/ripple/mixins";
+
+@mixin tablet {
+  @media (min-width: #{$tablet-width}) {
+    @content;
+  }
+}
+
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-text-size-adjust: none;
+}
+
+body, ul, li, div, img {
+  padding: 0;
+  margin:0;
+}
+
+body, html {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  width: 100%;
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  @include tablet {
+    height: 100vh;
+  }
+}
+
 .container {
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
-  margin-top: 10vh;
-  width: 375px;
-  height: 667px;
-  border: 1px solid black;
+  width: 100%;
+  height: 100vh;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  box-shadow: 0 50px 100px rgba(50,50,93,.05),
+              0 15px 35px rgba(50,50,93,.1),
+              0 5px 15px rgba(0,0,0,.1);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  @include tablet {
+    height: 667px;
+    width: 375px;
+    box-shadow: 0 50px 100px rgba(50,50,93,.05),
+                0 15px 35px rgba(50,50,93,.1),
+                0 5px 15px rgba(0,0,0,.1);
+  }
 
   .display {
+    position: relative;
     display: flex;
     flex-direction: column;
     flex: 36;
-    border: 1px solid red;
+    z-index: 1;
+    padding-right: 26px;
+    padding-left: 26px;
+    overflow: hidden;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+                0 1px 5px 0 rgba(0, 0, 0, 0.12),
+                0 3px 1px -2px rgba(0, 0, 0, 0.2);
 
     .expression {
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: flex-end;
       flex: 65;
-      border: 1px solid black;
+      padding-bottom: 20px;
+      font-size: 60px;
     }
 
     .result {
@@ -26,49 +97,111 @@
       align-items: center;
       justify-content: flex-end;
       flex: 35;
-      border: 1px solid black;
+      font-size: 36px;
+      color: $secondaryText;
+    }
+
+    .clear-ripple {
+      position: absolute;
+      background-color: $blue;
+      border-radius: 50%;
+      width: 2px;
+      height: 2px;
+      bottom: 0;
+      right: 58px;
+      animation: rippleOut 0.8s cubic-bezier(0, 0, 0.29, 0.9);
     }
   }
 
-  .buttons {
+  .pad {
     display: flex;
     flex-direction: row;
     flex: 64;
-    border: 1px solid blue;
+    color: white;
+    // cursor: pointer;
 
-    .numpad {
+    .basic-pad {
       display: flex;
-      flex-direction: column;
-      flex: 3;
-      border: 1px solid green;
+      flex-direction: row;
+      flex: 95;
 
-      .row {
+      .numpad {
         display: flex;
-        flex-direction: row;
-        flex: 1;
+        flex-direction: column;
+        flex: 3;
+        background-color: $darkGrey;
+        font-size: 34px;
+        // padding: 8px;
 
-        div {
+        .row {
           display: flex;
+          flex-direction: row;
           flex: 1;
+
+          .button {
+            display: flex;
+            flex: 1;
+            justify-content: center;
+            align-items: center;
+            @include mdc-ripple-base;
+            @include mdc-ripple-bg((pseudo: "::before", base-color: white));
+            @include mdc-ripple-fg((pseudo: "::after", base-color: white));
+            // overflow: hidden;
+            // border: 1px solid $grey;
+          }
+        }
+      }
+
+      .operators {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        background-color: $grey;
+        // padding: 8px 0px;
+        font-size: 22px;
+
+        #del {
+          font-size: 16px;
+        }
+
+        #clr {
+          display: none;
+          font-size: 16px;
+        }
+
+        .button {
+          display: flex;
           justify-content: center;
           align-items: center;
-          border: 1px solid black;
+          flex: 1;
+          @include mdc-ripple-base;
+          @include mdc-ripple-bg((pseudo: "::before", base-color: white));
+          @include mdc-ripple-fg((pseudo: "::after", base-color: white));
         }
       }
     }
 
-    .operators {
+    .advanced-pad {
       display: flex;
-      flex-direction: column;
-      flex: 1;
-
-      div {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex: 1;
-        border: 1px solid black;
-      }
+      align-items: center;
+      justify-content: center;
+      flex: 5;
+      background-color: $teal;
+      color: $advancedPadText;
+      font-weight: 500;
     }
+  }
+}
+
+@keyframes rippleOut {
+  0% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(500);
+  }
+  100% {
+    transform: scale(500);
+    opacity: 0;
   }
 }

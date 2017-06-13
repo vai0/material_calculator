@@ -1,8 +1,9 @@
 var webpack = require('webpack');
 var path = require('path');
+var glob = require('glob');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const VENDOR_LIBS = [];
+const VENDOR_LIBS = ['@material/animation', '@material/ripple', 'material-components-web', '@material/auto-init'];
 
 module.exports = {
   entry: {
@@ -28,11 +29,22 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [{
-          loader: "style-loader"
+          loader: "style-loader",
         }, {
           loader: "css-loader"
         }, {
           loader: "sass-loader",
+          options: {
+            includePaths: glob.sync('node_modules').map((d) => path.join(__dirname, d))
+          }
+        }]
+      },
+      {
+        test: /\.css$/,
+        use: [{
+          loader: "style-loader"
+        }, {
+          loader: "css-loader"
         }]
       },
       {
