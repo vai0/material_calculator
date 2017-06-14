@@ -137,6 +137,7 @@ const handlers = {
 
     // listen for keyboard input
     let keys = [];
+    let keyDelay;
     window.addEventListener("keydown", keysPressed.bind(this));
     window.addEventListener("keyup", keysReleased);
     function keysPressed(e) {
@@ -175,10 +176,14 @@ const handlers = {
           this.equals();
         } else if (keys[8] || keys[46]) {
           this.delete();
+          keyDelay = setTimeout(this.clear.bind(this), longpress);
         }
     }
     function keysReleased(e) {
         keys[e.keyCode] = false;
+        if (!keys[8] || !keys[46]) {
+          clearTimeout(keyDelay);
+        }
     }
   }
 }
@@ -195,7 +200,7 @@ const view = {
   renderClearRipple() {
     const ripple = document.querySelector('.ripple');
     ripple.classList.add('clear-ripple');
-    setTimeout(() => ripple.classList.remove('clear-ripple'), 1000);
+    setTimeout(() => ripple.classList.remove('clear-ripple'), 900);
   }
 }
 
