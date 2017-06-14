@@ -80,6 +80,7 @@ const handlers = {
   },
   delete() {
     calculator.delete();
+    view.renderDelButton();
     this.displayExpression();
     this.displayResult();
   },
@@ -105,6 +106,7 @@ const handlers = {
     result.innerText = calculator.result;
   },
   setEventListeners() {
+    // listen for clicks on pad
     const pad = document.querySelector('.pad');
     pad.addEventListener('click', (event) => {
       if (event.target.classList.contains('button')) {
@@ -123,7 +125,7 @@ const handlers = {
       }
     });
 
-    // long press DEL to clear
+    // listen for long clicks on DEL
     let delay;
     const longpress = 500;
     const del = document.getElementById('del');
@@ -132,6 +134,52 @@ const handlers = {
     }, true);
     del.addEventListener('mouseup', (event) => clearTimeout(delay));
     del.addEventListener('mouseout', (event) => clearTimeout(delay));
+
+    // listen for keyboard input
+    let keys = [];
+    window.addEventListener("keydown", keysPressed.bind(this));
+    window.addEventListener("keyup", keysReleased);
+    function keysPressed(e) {
+        keys[e.keyCode] = true;
+        if ((keys[56] && keys[16]) || keys[106] || keys[88]) {
+          this.input('*');
+        } else if ((keys[187] && keys[16]) || keys[107]) {
+          this.input('+');
+        } else if (keys[191] || keys[111]) {
+          this.input('/');
+        } else if (keys[189] || keys[109]) {
+          this.input('-');
+        } else if (keys[48] || keys[96]) {
+          this.input('0');
+        } else if (keys[49] || keys[97]) {
+          this.input('1');
+        } else if (keys[50] || keys[98]) {
+          this.input('2');
+        } else if (keys[51] || keys[99]) {
+          this.input('3');
+        } else if (keys[52] || keys[100]) {
+          this.input('4');
+        } else if (keys[53] || keys[101]) {
+          this.input('5');
+        } else if (keys[54] || keys[102]) {
+          this.input('6');
+        } else if (keys[55] || keys[103]) {
+          this.input('7');
+        } else if (keys[56] || keys[104]) {
+          this.input('8');
+        } else if (keys[57] || keys[105]) {
+          this.input('9');
+        } else if (keys[190] || keys[110]) {
+          this.input('.');
+        } else if (keys[187] || keys[13]) {
+          this.equals();
+        } else if (keys[8] || keys[46]) {
+          this.delete();
+        }
+    }
+    function keysReleased(e) {
+        keys[e.keyCode] = false;
+    }
   }
 }
 
@@ -147,7 +195,7 @@ const view = {
   renderClearRipple() {
     const ripple = document.querySelector('.ripple');
     ripple.classList.add('clear-ripple');
-    setTimeout(() => ripple.classList.remove('clear-ripple'), 800);
+    setTimeout(() => ripple.classList.remove('clear-ripple'), 1000);
   }
 }
 
