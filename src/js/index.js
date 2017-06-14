@@ -200,7 +200,7 @@ const view = {
   renderClearRipple() {
     const ripple = document.querySelector('.ripple');
     ripple.classList.add('clear-ripple');
-    setTimeout(() => ripple.classList.remove('clear-ripple'), 900);
+    setTimeout(() => ripple.classList.remove('clear-ripple'), 1200);
   }
 }
 

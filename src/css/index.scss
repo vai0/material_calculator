@@ -6,7 +6,7 @@ $advancedPadText: #0C5D49;
 $secondaryText: #909090;
 $tablet-width: 768px;
 
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700');
+@import url('https://fonts.googleapis.com/css?family=Roboto:300');
 @import "@material/ripple/mixins";
 
 @mixin tablet {
@@ -107,7 +107,7 @@ body, html {
       height: 1500px;
       bottom: -750px;
       right: -690px;
-      animation: rippleOut 1s ease-out;
+      animation: rippleOut 1.25s ease-out;
     }
   }
 
@@ -186,7 +186,6 @@ body, html {
       flex: 5;
       background-color: $teal;
       color: $advancedPadText;
-      font-weight: 500;
     }
   }
 }
