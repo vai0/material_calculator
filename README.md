@@ -29,7 +29,7 @@ A copy of the [Google Calculator on Android](https://play.google.com/store/apps/
 
 <br>
 
-__[Live Demo](https://justinchi.me/calculator/)__
+__[Live Demo](https://calc.justinchi.me/)__
 
 __Libraries:__ [Material Components](https://material.io/components/web/)
 
